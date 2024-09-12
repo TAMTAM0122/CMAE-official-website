@@ -3,13 +3,13 @@
     <el-button type="primary" @click="openDialog()">新增用户</el-button>
     <el-button type="danger">清除用户身份票据</el-button>
     <el-table border :data="tableData" v-loading="loading" style="width: 100%">
-      <el-table-column prop="Id" label="序号"></el-table-column>
-      <el-table-column prop="LoginName" label="用户名"></el-table-column>
-      <el-table-column prop="Password" label="密码"></el-table-column>
-      <el-table-column prop="IsAction" label="是否启用">
+      <el-table-column prop="id" label="序号"></el-table-column>
+      <el-table-column prop="loginName" label="用户名"></el-table-column>
+      <el-table-column prop="password" label="密码"></el-table-column>
+      <el-table-column prop="isAction" label="是否启用">
         <template slot-scope="scope">{{ scope.row.IsAction ? '是':'否' }}</template>
       </el-table-column>
-      <el-table-column prop="CreateTime" label="创建时间" :formatter="dateFormat"></el-table-column>
+      <el-table-column prop="createTime" label="创建时间" :formatter="dateFormat"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
@@ -67,11 +67,11 @@ export default {
     };
   },
   mounted() {
-    let token = "Browser " + sessionStorage.getItem("token");
+    let token = sessionStorage.getItem("token");
     //window.console.log(token);
     this.options = {
       headers: {
-        Authorization: token
+         Authorization: `Bearer ${token}`
       }
     };
 

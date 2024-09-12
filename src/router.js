@@ -3,16 +3,18 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-let kejianrouter = new Router({
+let cmaerouter = new Router({
   routes: [{
       path: '/',
       name: 'home',
-      component: () => import('./views/Home.vue')
+      component: () => import('./views/Home.vue'),
+      // meta: { title: '首页' }
     },
     {
       path: '/About-us',
       name: 'about-us',
       component: () => import('./views/About-us.vue'),
+      // meta: { title: '关于我们'}
     },
     {
       path: '/Case',
@@ -29,12 +31,6 @@ let kejianrouter = new Router({
       name: 'newsdetails',
       component: () => import('./views/NewsDetails.vue'),
     },
-    {
-      path: '/product',
-      name: 'product',
-      component: () => import('./views/Product.vue'),
-    },
-    
     {
       path: '/casedetails/:id',
       name: 'casedetails',
@@ -68,21 +64,6 @@ let kejianrouter = new Router({
           component: () => import('./views/Admin/Cases.vue')
         },
         {
-          path: '/admin/team',
-          name: 'team',
-          component: () => import('./views/Admin/Team.vue')
-        },
-        {
-          path: '/admin/course',
-          name: 'course',
-          component: () => import('./views/Admin/Course.vue')
-        },
-        {
-          path: '/admin/enterprise',
-          name: 'enterprise',
-          component: () => import('./views/Admin/Enterprise.vue')
-        },
-        {
           path: '/admin/honor',
           name: 'honor',
           component: () => import('./views/Admin/Honor.vue')
@@ -103,7 +84,7 @@ let kejianrouter = new Router({
 })
 
 // 判断是否需要登录权限 以及是否登录
-kejianrouter.beforeEach((to, from, next) => {
+cmaerouter.beforeEach((to, from, next) => {
   // 判断是否需要登录权限
   if (to.matched.some(res => res.meta.requireAuth)) {
     // 判断是否登录
@@ -123,4 +104,16 @@ kejianrouter.beforeEach((to, from, next) => {
   }
 })
 
-export default kejianrouter
+cmaerouter.afterEach((to) => {
+  if (to.path.startsWith('/admin')) {
+    document.title = '中國龍建功集團有限公司 - 后台管理系统';
+  } else {
+    document.title = '中國龍建功集團有限公司';
+  }
+
+  // 如果路由有 meta.title，则使用该标题，覆盖默认标题
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+});
+export default cmaerouter

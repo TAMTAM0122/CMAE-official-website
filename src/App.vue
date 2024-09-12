@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <el-container>
-      <el-header>
+      <el-header v-if="!$route.path.startsWith('/admin')">
         <div class="logo">
           <img src="./assets/img/logo.jpg" alt />
         </div>
@@ -13,7 +13,7 @@
           :router="router"
         >
           <el-menu-item index="/">首页</el-menu-item>
-          <el-menu-item index="/about-us">關於燦文</el-menu-item>
+          <el-menu-item index="/about-us">關於我們</el-menu-item>
           <el-menu-item index="/case">重點項目</el-menu-item>
           <el-menu-item index="/news">新聞動態</el-menu-item>
           <el-menu-item index="/Recruitment">人才招聘</el-menu-item>
@@ -84,7 +84,7 @@ body {
   width: 1240px;
   margin: 0 auto;
   //background-color: #fff;
-
+  
   .logo {
     width: 380px;
     padding: 10px;

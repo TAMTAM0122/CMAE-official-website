@@ -4,14 +4,15 @@
     <div class="case-section" v-loading="loading">
       <div class="case-section-content">
         <div class="case-section-content-list" v-for="(cas,index) in caseList" :key="index">
-          <img v-lazy="imgserver+cas.Img" />
+          <!-- <img v-lazy="imgserver + cas.img" /> -->
+          <img :src="fullImagePath(cas.img)" alt="Case Image" />
           <div class="content-list-abstract" :class="{'abstract-active' : index%2!=1}">
-            <p class="abstract-title">{{cas.Title}}</p>
-            <p class="abstract-content">{{cas.Content}}</p>
+            <p class="abstract-title">{{cas.title}}</p>
+            <p class="abstract-content">{{cas.content}}</p>
             <div class="more">
               <router-link
                 class="text-decoration"
-                :to="{ name: 'casedetails', params: { id: cas.Id }}"
+                :to="{ name: 'casedetails', params: { id: cas.id }}"
               >
                 <span>more</span>
                 <img src="../assets/img/sanjiao.png" />
@@ -35,14 +36,22 @@ export default {
       caseList: []
     };
   },
+  methods: {
+    fullImagePath(imagePath) {
+      // 1. 替换反斜杠为正斜杠
+      const normalizedPath = imagePath.replace(/\\/g, '/');
+      // 2. 拼接图片服务器地址和相对路径
+      return "http://localhost/" + normalizedPath;
+    }
+  },
   mounted() {
     window.console.log("case");
     this.$http
-      .get("Cases/GetCasesAll")
+      .get("Case/GetListAll")
       .then(response => {
         //console.log(response);
         this.caseList = response.data;
-        //window.console.log(this.caseList);
+        window.console.log(this.caseList);
         this.loading = false;
       })
       .catch(function(error) {

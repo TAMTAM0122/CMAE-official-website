@@ -1,15 +1,15 @@
 <template>
   <div class="cases">
-    <el-button type="primary" @click="openDialog()">新增用户</el-button>
+    <el-button type="primary" @click="openDialog()">新增照片</el-button>
 
     <el-table border :data="tableData" v-loading="loading" style="width: 100%">
-      <el-table-column prop="Id" label="序号" width="180"></el-table-column>
-      <el-table-column prop="Img" label="荣誉图片">
+      <el-table-column prop="id" label="序号" width="180"></el-table-column>
+      <el-table-column prop="img" label="荣誉图片">
         <template slot-scope="scope">
-          <img style="width:100%" :src="imgserver+scope.row.Img" alt />
+          <img style="width:100%" :src="imgserver + scope.row.img" alt />
         </template>
       </el-table-column>
-      <el-table-column prop="Remark" label="荣誉标题" width="180"></el-table-column>
+      <el-table-column prop="remark" label="荣誉标题" width="180"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
@@ -25,22 +25,22 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="合作企业管理" :visible.sync="dialogFormVisible">
+    <el-dialog title="荣誉图片编辑" :visible.sync="dialogFormVisible">
       <el-form :model="formData">
         <el-form-item label="荣誉图片" :label-width="formLabelWidth">
           <el-upload
             class="avatar-uploader"
-            action="http://shkjgw.shkjem.com/api/UpLoad/UploadImage"
+            action="http://localhost:8081/Tool/Upload?type=honor"
             :headers="headers"
             :show-file-list="false"
             :on-success="handleSuccess"
           >
-            <img v-if="formData.Img" :src="imgserver+formData.Img" class="avatar" />
+            <img v-if="formData.img" :src="imgserver + formData.img" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
         <el-form-item label="荣誉标题" :label-width="formLabelWidth">
-          <el-input v-model="formData.Remark" autocomplete="off"></el-input>
+          <el-input v-model="formData.remark" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -60,17 +60,17 @@ export default {
       formLabelWidth: "120px",
       tableData: [],
       formData: {
-        Id: 0,
-        Img: "",
-        Remark: "",
-        CreateTime: new Date()
+        id: 0,
+        img: "",
+        remark: "",
+        createTime: new Date()
       },
       options: {},
       headers: {}
     };
   },
   mounted() {
-    let token = "Browser " + sessionStorage.getItem("token");
+    let token = "Bearer " + sessionStorage.getItem("token");
     //window.console.log(token);
     this.options = {
       headers: {
@@ -85,7 +85,7 @@ export default {
   methods: {
     handleSuccess(response, file, fileList) {
       window.console.log(response, file, fileList);
-      this.formData.Img = response;
+      this.formData.img = response;
     },
     loadData() {
       this.loading = true;
@@ -105,10 +105,10 @@ export default {
     },
     openDialog() {
       // 清除数据
-      this.formData.Id = 0;
-      this.formData.Img = "";
-      this.formData.Remark = "";
-      this.formData.CreateTime = new Date();
+      this.formData.id = 0;
+      this.formData.img = "";
+      this.formData.remark = "";
+      this.formData.createTime = new Date();
 
       this.dialogFormVisible = true;
     },
@@ -116,7 +116,7 @@ export default {
     handleCreateOrModify() {
       window.console.log(this.formData);
       //window.console.log(JSON.stringify(this.formData));
-      if (!this.formData.Id) {
+      if (!this.formData.id) {
         // ID 无效时 视为新增
         this.loading = true;
         this.$http
@@ -161,7 +161,8 @@ export default {
     },
     handleEdit(index, row) {
       window.console.log(index, row);
-      this.formData = row;
+      // this.formData = row;
+      this.formData = JSON.parse(JSON.stringify(row));
       this.dialogFormVisible = true;
     },
     handleDelete(index, row) {
@@ -176,7 +177,7 @@ export default {
           // 调接口删除
           this.loading = true;
           this.$http
-            .post(`Honor/DeleteHonor?id=${row.Id}`, null, this.options)
+            .post(`Honor/DeleteHonor?id=${row.id}`, null, this.options)
             .then(response => {
               this.loading = false;
               window.console.log(response);

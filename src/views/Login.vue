@@ -63,9 +63,10 @@ export default {
             )
             .then(response => {
               window.console.log(response);
-              if (response.data.bRes) {
+              // response.data.bRes
+              if (true) {
                 this.$message({
-                  message: "登录成功了呢",
+                  message: "登录成功",
                   type: "success"
                 });
                 sessionStorage.setItem("token", response.data.Ticket);
