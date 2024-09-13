@@ -19,6 +19,7 @@
       <el-table-column prop="type" label="新闻类别">
         <template slot-scope="scope">{{scope.row.type == 1 ? '公司新闻':'行业动态'}}</template>
       </el-table-column>
+      <el-table-column prop="eventTime" label="事件时间" width="180"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
@@ -39,6 +40,13 @@
       <el-form :model="formData">
         <el-form-item label="新闻名称" :label-width="formLabelWidth">
           <el-input v-model="formData.title" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="事件时间" :label-width="formLabelWidth">
+            <el-date-picker
+              v-model="formData.eventTime"
+              type="datetime"
+              placeholder="选择日期时间">
+            </el-date-picker>
         </el-form-item>
         <el-form-item label="新闻图片" :label-width="formLabelWidth">
           <el-upload
@@ -82,6 +90,7 @@ export default {
         img: "",
         type: 1,
         content: "",
+        eventTime: "",
         createTime: new Date()
       },
       dialogFormVisible: false,
@@ -131,6 +140,7 @@ export default {
       this.formData.img = "";
       this.formData.type = 1;
       this.formData.content = "";
+      this.formData.eventTime = "";
       this.formData.createTime = new Date();
 
       this.dialogFormVisible = true;
@@ -184,6 +194,7 @@ export default {
       window.console.log(index, row);
       // this.formData = row;
       this.formData = JSON.parse(JSON.stringify(row));
+      this.formData.type = Number(this.formData.type);
       this.dialogFormVisible = true;
     },
     handleDelete(index, row) {

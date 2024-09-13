@@ -56,7 +56,6 @@
             <div class="item-content" :style="'order: '+ (i%2==0 ? 3: 1)">
               <h3>{{news.title}}</h3>
               <p>{{news.content}}</p>
-              <span>{{news.createTime}}</span>
             </div>
           </div>
         </div>

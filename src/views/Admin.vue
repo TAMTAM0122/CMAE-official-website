@@ -61,9 +61,37 @@ export default {
   name: "admin",
   methods: {
     handleLogout() {
-      // 登出逻辑，例如清除 token 跳转到登录页
-      console.log('用户点击了登出');
+  // 假设你的后端有一个登出接口
+  this.$http.post('User/Logout', null, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`
     }
+  })
+  .then(response => {
+    // 1. 打印响应
+    window.console.log('用户成功登出', response);
+
+    // 2. 清除存储的 token
+    sessionStorage.removeItem('token');
+
+    // 3. 跳转到登录页面
+    this.$router.push('/login');
+    
+    this.$message({
+      message: '成功退出登录',
+      type: 'success'
+    });
+  })
+  .catch(error => {
+    window.console.error('退出登录失败', error);
+
+    this.$message({
+      message: '退出登录失败，请重试',
+      type: 'error'
+    });
+  });
+}
+
   }
 };
 </script>

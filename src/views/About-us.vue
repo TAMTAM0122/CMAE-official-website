@@ -3,6 +3,8 @@
       <banner img="../assets/img/bgtop.jpg" title="關於我们" />
       <div class="section" v-loading="loading">
         <div class="section-content">
+
+
           <div class="content-summary">
             <div class="summary-left">
               <p class="title">關於我们</p>
@@ -21,9 +23,13 @@
               <img src="../assets/img/jianjietopmin.jpg" alt />
             </div>
           </div>
+
+
           <el-divider class="el-divider-active">
             <i class="el-icon-arrow-down el-icon-arrow-down-active"></i>
           </el-divider>
+
+          
           <div class="content-culture">
             <h3>企業文化</h3>
             <h3>CULTURE</h3>

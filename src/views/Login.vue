@@ -2,7 +2,7 @@
   <div class="login">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>科建后台登录入口</span>
+        <span>中国龙建工集团后台登录入口</span>
       </div>
       <div>
         <el-form
