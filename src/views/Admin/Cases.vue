@@ -1,6 +1,15 @@
 <template>
   <div class="cases">
+    <el-form :model="QueryData" inline>
     <el-button type="primary" @click="openDialog()">新增案例</el-button>
+    <el-form-item label="">
+        <el-input v-model="QueryData.title" placeholder="请输入案例标题"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="handleQuery">查询</el-button>
+        <el-button @click="resetForm">重置</el-button>
+      </el-form-item>
+    </el-form>
     <el-table border :data="tableData" v-loading="loading" style="width: 100%">
       <el-table-column prop="id" label="序号" width="180"></el-table-column>
       <el-table-column prop="title" label="案例标题" width="180"></el-table-column>
@@ -59,6 +68,7 @@ export default {
       dialogFormVisible: false,
       formLabelWidth: "120px",
       tableData: [],
+      QueryData: { title: '' }, 
       formData: {
         id: 0,
         img: "",
@@ -82,6 +92,25 @@ export default {
     this.loadData();
   },
   methods: {
+    handleQuery() {
+        const queryObject = this.QueryData;  // 直接使用对象
+        console.log(queryObject);  
+        this.$http
+        .post("Case/FindCasesByTitle", queryObject)
+        .then(response => {
+            // 假设后端返回查询结果
+            this.tableData = response.data;
+        })
+        .catch(error => {
+          console.error('查询失败:', error);
+        });
+    },
+    resetForm() {
+      this.QueryData = {
+        job: ''
+      };
+      this.QueryData = []; // 重置表格数据
+    },
     // 处理上传成功后的响应
     handleSuccess(response, file, fileList) {
       window.console.log(response, file, fileList);

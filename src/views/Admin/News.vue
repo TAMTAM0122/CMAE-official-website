@@ -1,7 +1,15 @@
 <template>
   <div class="news">
+    <el-form :model="QueryData" inline>
     <el-button type="primary" @click="openDialog()">新增新聞</el-button>
-
+    <el-form-item label="">
+        <el-input v-model="QueryData.title" placeholder="请输入新闻标题"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="handleQuery">查询</el-button>
+        <el-button @click="resetForm">重置</el-button>
+      </el-form-item>
+    </el-form>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
       <el-table-column prop="id" label="序号" width="180"></el-table-column>
       <el-table-column prop="title" label="新闻标题" width="180"></el-table-column>
@@ -84,6 +92,7 @@ export default {
       options: {},
       headers: {},
       tableData: [],
+      QueryData: { title: '' },  
       formData: {
         id: 0,
         title: "",
@@ -113,6 +122,25 @@ export default {
     this.loadData();
   },
   methods: {
+    handleQuery() {
+        const queryObject = this.QueryData;  // 直接使用对象
+        console.log(queryObject);  
+        this.$http
+        .post("News/FindNewsByTitle", queryObject)
+        .then(response => {
+            // 假设后端返回查询结果
+            this.tableData = response.data;
+        })
+        .catch(error => {
+          console.error('查询失败:', error);
+        });
+    },
+    resetForm() {
+      this.QueryData = {
+        job: ''
+      };
+      this.QueryData = []; // 重置表格数据
+    },
     handleSuccess(response, file, fileList) {
       window.console.log(response, file, fileList);
       this.formData.img = response;

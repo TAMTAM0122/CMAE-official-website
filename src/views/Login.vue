@@ -64,18 +64,19 @@ export default {
             .then(response => {
               window.console.log(response);
               // response.data.bRes
-              if (true) {
+               // 检查后端返回的 bRes 是否为 true
+              if (response.data.bRes) {
                 this.$message({
-                  message: "登录成功",
+                  message: response.data.message || "登录成功",  // 使用后端返回的消息
                   type: "success"
-                });
-                sessionStorage.setItem("token", response.data.Ticket);
-                this.$router.push({ name: "admin" });
+              });
+                  sessionStorage.setItem("token", response.data.Ticket);  // 保存后端返回的 token
+                  this.$router.push({ name: "admin" });  // 跳转到 admin 页面
               } else {
-                this.$message({
-                  message: "账号或密码错误",
-                  type: "error"
-                });
+                  this.$message({
+                  message: response.data.message || "账号或密码错误",  // 使用后端返回的消息
+                type: "error"
+              });
               }
             })
             .catch(e => {

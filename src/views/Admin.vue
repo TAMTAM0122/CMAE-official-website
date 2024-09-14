@@ -33,13 +33,9 @@
             <i class="el-icon-edit-outline"></i>
             <span slot="title">荣誉墙管理</span>
           </el-menu-item>
-          <el-menu-item index="/admin/dictionary">
-            <i class="el-icon-setting"></i>
-            <span slot="title">数据字典管理</span>
-          </el-menu-item>
-          <el-menu-item index="/admin/page">
-            <i class="el-icon-setting"></i>
-            <span slot="title">测试分页</span>
+          <el-menu-item index="/admin/job">
+            <i class="el-icon-edit-outline"></i>
+            <span slot="title">人才招聘管理</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -75,7 +71,8 @@ export default {
     sessionStorage.removeItem('token');
 
     // 3. 跳转到登录页面
-    this.$router.push('/login');
+    // this.$router.push('/login');
+    window.location.href = '/login'
     
     this.$message({
       message: '成功退出登录',
@@ -105,19 +102,78 @@ export default {
   padding: 20px;
 }
 
+.el-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh; /* 设置整个页面高度 */
+}
+
+.el-aside {
+  height: 100%; /* 让aside高度随父容器调整 */
+  overflow: hidden;
+  background-color: #343a40; /* 深色背景 */
+  color: white; /* 白色字体 */
+}
+
+.el-menu {
+  background-color: #343a40; /* 确保菜单背景与aside背景一致 */
+  color: white; /* 白色字体 */
+}
+
+.el-menu-item {
+  color: #ffffff; /* 菜单项的字体颜色 */
+}
+
+.el-menu-item:hover {
+  background-color: #495057; /* 悬停时背景颜色 */
+}
+
+.el-menu-item.is-active {
+  background-color: #007bff; /* 激活状态下的背景颜色 */
+}
+
 .el-footer {
   line-height: 60px;
 }
 
-/* header 样式调整 */
+// /* header 样式调整 */
+// .header {
+//   color: white;
+//   height: 60px;
+//   line-height: 60px;
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 0 20px; /* 内边距调整 */
+// }
+
+// .header-content {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 100%;
+// }
+
+// .logo {
+//   display: flex;
+//   align-items: center;
+//   img {
+//     width: 150px; /* 调整 logo 的大小 */
+//   }
+// }
+
 .header {
-  color: white;
+  background-color: #2b2d30; /* 深色背景 */
+  color: white; /* 字体颜色 */
   height: 60px;
+  width: 100%; /* 确保宽度为100% */
   line-height: 60px;
   display: flex;
   justify-content: space-between;
   padding: 0 20px; /* 内边距调整 */
+  margin: 0; /* 确保没有外边距，防止不必要的空白 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加下方阴影 */
 }
+
 
 .header-content {
   display: flex;
@@ -126,13 +182,20 @@ export default {
   width: 100%;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  img {
-    width: 150px; /* 调整 logo 的大小 */
-  }
+/* 调整 logo 样式，使其适应新的 header 背景 */
+.logo img {
+  width: 150px;
 }
+
+/* 登出按钮调整为与 header 相同的深色风格 */
+.logout-button {
+  background-color: #FF4D4F; /* 红色背景，用于登出按钮 */
+  border-color: #FF4D4F;
+  color: white; /* 按钮文字为白色 */
+}
+
+
+
 /* 登出按钮的样式 */
 .logout-button {
   background-color: #FF4D4F;

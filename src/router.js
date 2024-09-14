@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 let cmaerouter = new Router({
+  mode: 'history', // 切换到 history 模式
   routes: [{
       path: '/',
       name: 'home',
@@ -69,14 +70,9 @@ let cmaerouter = new Router({
           component: () => import('./views/Admin/Honor.vue')
         },
         {
-          path: '/admin/dictionary',
-          name: 'dictionary',
-          component: () => import('./views/Admin/Dictionary.vue')
-        },
-        {
-          path: '/admin/page',
-          name: 'page',
-          component: () => import('./views/Admin/Page.vue')
+          path: '/admin/job',
+          name: 'job',
+          component: () => import('./views/Admin/Job.vue')
         }
       ]
     }
